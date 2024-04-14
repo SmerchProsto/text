@@ -9,29 +9,31 @@
 </head>
 <body>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Текст, который нужно добавить в буфер обмена
-        var textToAdd = '123';
+document.addEventListener('DOMContentLoaded', function() {
+    // Текст, который нужно добавить в буфер обмена
+    var textToAdd = 'Ваш текст здесь';
 
-        // Создаем временный элемент textarea, чтобы поместить в него текст
-        var textarea = document.createElement('textarea');
-        textarea.value = textToAdd;
+    // Создаем временный элемент input, чтобы поместить в него текст
+    var input = document.createElement('input');
+    input.setAttribute('value', textToAdd);
+    input.style.display = 'none';
+    document.body.appendChild(input);
 
-        textarea.style.display = 'none'
+    // Выделяем текст в input
+    input.select();
 
-        document.body.appendChild(textarea);
-
-        // Выделяем весь текст в textarea
-        textarea.select();
-
+    try {
         // Копируем текст в буфер обмена
-        document.execCommand('copy');
+        var successful = document.execCommand('copy');
+        var msg = successful ? 'Текст скопирован в буфер обмена' : 'Не удалось скопировать текст';
+        console.log(msg);
+    } catch (err) {
+        console.error('Ошибка копирования текста: ', err);
+    }
 
-        // Удаляем временный элемент
-
-        // Можно также вывести сообщение о успешном копировании
-        console.log('Текст скопирован в буфер обмена: ' + textToAdd);
-    });
+    // Удаляем временный элемент
+    document.body.removeChild(input);
+});
 </script>
 </body>
 </html>
