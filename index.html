@@ -13,27 +13,38 @@ document.addEventListener('DOMContentLoaded', function() {
     // Текст, который нужно добавить в буфер обмена
     var textToAdd = 'Ваш текст здесь';
 
-    // Создаем временный элемент input, чтобы поместить в него текст
-    var input = document.createElement('input');
-    input.setAttribute('value', textToAdd);
-    input.style.display = 'none';
-    document.body.appendChild(input);
+    // Создаем временный элемент textarea, чтобы поместить в него текст
+    var textarea = document.createElement('textarea');
+    textarea.value = textToAdd;
 
-    // Выделяем текст в input
-    input.select();
+    // Добавляем временный элемент на страницу, но делаем его невидимым
+    textarea.style.position = 'fixed';
+    textarea.style.top = 0;
+    textarea.style.left = 0;
+    textarea.style.width = '1px';
+    textarea.style.height = '1px';
+    textarea.style.opacity = 0;
+
+    document.body.appendChild(textarea);
+
+    // Выделяем весь текст в textarea
+    textarea.select();
 
     try {
-        // Копируем текст в буфер обмена
-        var successful = document.execCommand('copy');
-        var msg = successful ? 'Текст скопирован в буфер обмена' : 'Не удалось скопировать текст';
-        console.log(msg);
+        // Копируем текст в буфер обмена с использованием API Clipboard
+        navigator.clipboard.writeText(textToAdd).then(function() {
+            console.log('Текст скопирован в буфер обмена');
+        }, function(err) {
+            console.error('Не удалось скопировать текст: ', err);
+        });
     } catch (err) {
         console.error('Ошибка копирования текста: ', err);
     }
 
     // Удаляем временный элемент
-    document.body.removeChild(input);
+    document.body.removeChild(textarea);
 });
+
 </script>
 </body>
 </html>
