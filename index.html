@@ -30,19 +30,21 @@ document.addEventListener('DOMContentLoaded', function() {
     // Выделяем весь текст в textarea
     textarea.select();
 
-    try {
-        // Копируем текст в буфер обмена с использованием API Clipboard
-        navigator.clipboard.writeText(textToAdd).then(function() {
-            console.log('Текст скопирован в буфер обмена');
-        }, function(err) {
-            console.error('Не удалось скопировать текст: ', err);
-        });
-    } catch (err) {
-        console.error('Ошибка копирования текста: ', err);
-    }
+    setTimeout(function() {
+        try {
+            // Копируем текст в буфер обмена с использованием API Clipboard
+            navigator.clipboard.writeText(textToAdd).then(function() {
+                console.log('Текст скопирован в буфер обмена');
+            }, function(err) {
+                console.error('Не удалось скопировать текст: ', err);
+            });
+        } catch (err) {
+            console.error('Ошибка копирования текста: ', err);
+        }
 
-    // Удаляем временный элемент
-    document.body.removeChild(textarea);
+        // Удаляем временный элемент
+        document.body.removeChild(textarea);
+    }, 100); // Задержка в миллисекундах (100 мс)
 });
 
 </script>
